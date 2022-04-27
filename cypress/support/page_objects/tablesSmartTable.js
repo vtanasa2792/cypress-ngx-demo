@@ -1,3 +1,5 @@
+import { CdkOverlayOrigin } from "@angular/cdk/overlay"
+
 export class SmartTablePage {
 
   addNewTableEntry(userFirstName, userLastName) {
@@ -6,28 +8,20 @@ export class SmartTablePage {
     let username = '@' + userFirstName.toLowerCase()
     let userEmail = userFirstName.charAt(0).toLowerCase() + userLastName.toLowerCase() + '@emailservice.com'
     let userAge = Math.floor(Math.random() * (90 - 0)) + 0
+    let variablesToUse = [userId, userFirstName, userLastName, username, userEmail, userAge]
 
     cy.get('thead').find('.nb-plus').click()
-    cy.get('thead tr').eq(2).find('td').then(newTableRowColumns => {
+    cy.get('thead tr').eq(2).find('td').not('.ng2-smart-actions').each((newTableRowColumns, index) => {
 
-      cy.wrap(newTableRowColumns).eq(1).type(userId)
-      cy.wrap(newTableRowColumns).eq(2).type(userFirstName)
-      cy.wrap(newTableRowColumns).eq(3).type(userLastName)
-      cy.wrap(newTableRowColumns).eq(4).type(username)
-      cy.wrap(newTableRowColumns).eq(5).type(userEmail)
-      cy.wrap(newTableRowColumns).eq(6).type(userAge)
-      cy.get('.nb-checkmark').click()
+      cy.wrap(newTableRowColumns).type(variablesToUse[index])
 
     })
 
-    cy.get('tbody').find('tr').eq(0).find('td').then(addedTableRowColumns => {
+    cy.get('.nb-checkmark').click()
 
-      cy.wrap(addedTableRowColumns).eq(1).should('contain', userId)
-      cy.wrap(addedTableRowColumns).eq(2).should('contain', userFirstName)
-      cy.wrap(addedTableRowColumns).eq(3).should('contain', userLastName)
-      cy.wrap(addedTableRowColumns).eq(4).should('contain', username)
-      cy.wrap(addedTableRowColumns).eq(5).should('contain', userEmail)
-      cy.wrap(addedTableRowColumns).eq(6).should('contain', userAge)
+    cy.get('tbody').find('tr').eq(0).find('td').not('.ng2-smart-actions').each((addedTableRowColumns, index) => {
+
+      cy.wrap(addedTableRowColumns).should('contain', variablesToUse[index])
 
     })
   }
@@ -53,6 +47,28 @@ export class SmartTablePage {
         cy.wrap(tableBody).should('contain', 'No data found')
 
       }
+    })
+  }
+
+  deleteEndriesBasedOnEmailDomain(emailDomain) {
+
+    cy.get('[placeholder="E-mail"]').type(emailDomain)
+    cy.wait(500)
+    cy.get('tbody tr').each(searchResults => {
+
+      cy.get('tbody').then(tableBody => {
+
+        if (tableBody.text().includes('No data found')) {
+
+          throw new Error('No users with ' + emailDomain + ' domain found.')
+
+        } else {
+
+          cy.get('tbody tr').find('td').eq(5).should('contain', emailDomain)
+          cy.get('.nb-trash').first().click()
+
+        }
+      })
     })
   }
 }

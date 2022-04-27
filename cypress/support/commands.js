@@ -27,5 +27,15 @@
 import { createYield } from "typescript";
 
 Cypress.Commands.add('openHomePage', () => {
-    cy.visit('/')
+  cy.visit('/')
 })
+
+// Cypress.Commands.add('selectFeatureGroup', (groupName) => {
+//   cy.contains('a', groupName).then(featureGroup => {
+//     cy.wrap(featureGroup).find('.expand-state').invoke('attr', 'ng-reflect-icon').then(expandState => {
+//       if (expandState.includes('left')) {
+//         cy.wrap(featureGroup).click()
+//       }
+//     })
+//   })
+// })

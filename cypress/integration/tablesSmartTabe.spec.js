@@ -19,12 +19,21 @@ describe('Smart Tables', () => {
 
   })
 
-  it.only('Search for and delete an entry based on the First and Last names', () => {
+  it('Search for and delete an entry based on the First and Last names', () => {
 
     //Can be added to the previous test to delete the created entry.
     //Throws an explicit error if the user does not exist. Unnecessary but fun.
 
-    onSmartTablePage.deleteEntryBasedOnFirstAndLastNames('Ann', 'Smit4h')
+    onSmartTablePage.deleteEntryBasedOnFirstAndLastNames('Ann', 'Smith')
+
+  })
+
+  it('Delete entries based on Email Domain', () => {
+
+    //Searches and deletes entries based on the email domain.
+    //Throws an error if no users matching the email domain are found.
+
+    onSmartTablePage.deleteEndriesBasedOnEmailDomain('@gmail.com')
 
   })
 
