@@ -1,4 +1,7 @@
 {
-    "typescript.tsdk": "./node_modules/typescript/lib",
-    "tslint.enable": false
+  "cucumberautocomplete.steps": [
+    "test/features/step_definitions/*.js",
+    "node_modules/qa-lib/src/step_definitions/*.js"
+  ],
+  "cucumberautocomplete.strictGherkinCompletion": true
 }

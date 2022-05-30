@@ -1,4 +1,8 @@
 function selectFeatureGroup(groupName) {
+
+  //A function used to select and expand the desired Feature Group (Navigation Menu) so that subsequent commands for accessing the Sub-Features is easier;
+  //The function checks to see if the Feature Group is expanded in order for the Sub-Features to be accessible;
+
   cy.contains('a', groupName).then(featureGroup => {
     cy.wrap(featureGroup).find('.expand-state').invoke('attr', 'ng-reflect-icon').then(expandState => {
       if (expandState.includes('left')) {
