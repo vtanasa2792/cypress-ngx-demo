@@ -4,6 +4,12 @@ This is a repository containing a variety of automated test cases written using 
 
 The test cases cover scenarios encountered when using common web elements such as Navigation Menus, Datepickers, Forms, Steppers and Tables. 
 
+The tests can be found in:
+
+*/cypress/integration
+
+*/cypress/support/page_objects
+
 ## Commands:
 
 1. Start the NGX-Admin application:
